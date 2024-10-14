@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage[english,russian]{babel}
+\begin{document}
+
+\section{Normalization}
+$((\lambda a.(\lambda b.bb)(\lambda b.bb))\ b)((\lambda c.(c b))(\lambda a.a)) \to \\ 
+((\lambda b.bb)(\lambda b.bb)) ((\lambda c.(cb))(\lambda a.a)) \to \\
+((\lambda b.bb)(\lambda b.bb)) ((\lambda c.(cb))(\lambda a.a)) \to \\$
+Если бы у терма была нормальная форма, то последовательным сокращением левого редекса мы бы получили нормальную форму по теореме Карри, но мы получили зацикливание
+\section{SKK}
+$
+S \ K \ K \ = \\
+((\lambda xyz.xz(yz))(\lambda xy.x)(\lambda xy.x)) \to \\
+(\lambda yz.(\lambda xy.x)z(yz))(\lambda xy.x) \to \\
+(\lambda z.(\lambda xy.x)z((\lambda xy.x)z)) \to \\
+(\lambda z.((\lambda y.z)((\lambda xy.x)z)) \to \\
+(\lambda z.(\lambda ((\lambda xy.x)z).z)) \to \\
+(\lambda z.z) = I
+$
+\end{document}

@@ -30,16 +30,18 @@ type MultiThreadLazy<'T>(supplier: unit -> 'T) =
 
     let computeValue () =
         if not isInitialized then
-            let result = supplier.Value()
-            supplier <- None
-            value <- Some result
-            isInitialized <- true
+            lock syncObject (fun () ->
+                if not isInitialized then
+                    let result = supplier.Value()
+                    supplier <- None
+                    value <- Some result
+                    isInitialized <- true
+            )
         value.Value
 
     interface ILazy<'T> with
         member this.Get() =
-            lock syncObject (fun () ->
-                computeValue())
+            computeValue()
 
 type LockFreeLazy<'T>(supplier: unit -> 'T) =
     let mutable supplier = Some supplier

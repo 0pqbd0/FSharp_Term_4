@@ -39,4 +39,9 @@ let rec reduce term =
     | Var x -> term 
     | Abstraction (var, expr) -> Abstraction (var, reduce expr)
     | Application (Abstraction(var, expr1), expr2) -> substitute var expr1 expr2
-    | Application (expr1, expr2) -> Application (reduce expr1, reduce expr2)
+    | Application (expr1, expr2) -> 
+        let reducedExpr1 = reduce expr1
+        let reducedExpr2 = reduce expr2
+        match reducedExpr1 with
+        | Abstraction(_, _) -> reduce (Application(reducedExpr1, reducedExpr2))
+        | _ -> Application(reducedExpr1, reducedExpr2)

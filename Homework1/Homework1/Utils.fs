@@ -32,7 +32,7 @@ let powerList n m =
             let rec calculation acc iter =
                 match iter with
                 | x when x < n -> Some(acc) 
-                | _ -> calculation ((pown 2 iter) :: acc) (iter - 1) 
+                | _ -> calculation (List.head acc / 2 :: acc) (iter - 1) 
             calculation [max] (n + m - 1)
 
 let findList list elem =

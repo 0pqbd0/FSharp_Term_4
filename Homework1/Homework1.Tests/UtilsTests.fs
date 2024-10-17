@@ -88,4 +88,3 @@ let incorrectFindListTests =
 [<TestCaseSource("incorrectFindListTests")>]
 let FindListWithIncorrectArguments (list, elem) =
     Assert.AreEqual(None, findList list elem)
-

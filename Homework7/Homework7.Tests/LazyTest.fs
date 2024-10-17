@@ -21,17 +21,15 @@ let multiThreadLazyConstructors =
 [<Repeat(10)>]
 let CounterShouldBeIncrementedOnce (lazySupplier: (unit -> obj) -> obj ILazy) =
     let counter = ref 0
-    let supplier = fun _ -> Interlocked.Increment(counter) 
-                            obj()
+    let supplier = fun _ -> 
+        let result = Interlocked.Increment(counter)
+        result :> obj 
+    let lazyInstance = lazySupplier supplier
 
-    let lazyObject = lazySupplier supplier
+    lazyInstance.Get() |> ignore
+    lazyInstance.Get() |> ignore
 
-    Seq.initInfinite (fun _ -> lazyObject.Get())
-    |> Seq.take 50
-    |> Seq.distinct
-    |> Seq.length |> should equal 1
-
-    counter.Value |> should equal 1
+    Assert.AreEqual(1, !counter)
 
 [<TestCaseSource("multiThreadLazyConstructors")>]
 [<Repeat(10)>]

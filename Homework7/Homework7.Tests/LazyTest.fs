@@ -35,8 +35,9 @@ let CounterShouldBeIncrementedOnce (lazySupplier: (unit -> obj) -> obj ILazy) =
 [<Repeat(10)>]
 let  CounterShouldReturnSameValueOnceMultiThread (lazySupplier: (unit -> obj) -> obj ILazy) =
     let counter = ref 0
-    let supplier = fun _ -> Interlocked.Increment(counter) 
-                            obj()
+    let supplier = fun _ -> 
+        let result = Interlocked.Increment(counter)
+        result :> obj
 
     let lazyObject = lazySupplier supplier
 
@@ -52,8 +53,9 @@ let  CounterShouldReturnSameValueOnceMultiThread (lazySupplier: (unit -> obj) ->
 [<Repeat(10)>]
 let  MultiThreadLazyShouldUseSupplierOnce () =
     let counter = ref 0
-    let supplier = fun _ -> Interlocked.Increment(counter) 
-                            obj()
+    let supplier = fun _ -> 
+        let result = Interlocked.Increment(counter)
+        result :> obj
 
     let lazyObject = MultiThreadLazy supplier :> obj ILazy
 

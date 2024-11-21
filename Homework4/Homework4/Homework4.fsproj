@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="bracketsChecker.fs" />
+    <Compile Include="pointFree.fs" />
+    <Compile Include="phoneBook.fs" />
+  </ItemGroup>
+
+</Project>
